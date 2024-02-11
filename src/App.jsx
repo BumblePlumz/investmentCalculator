@@ -13,13 +13,13 @@ const INITIAL_INVESTMENT = {
 function App() {
   const [investmentData, setInvestmentData] = useState(INITIAL_INVESTMENT);
 
-  // console.log(investmentData);
+  const isInputValid = investmentData.duration >= 1;
 
   function handleInvestmentData(key, newData) {
     setInvestmentData((prevData) => {
       return {
         ...prevData,
-        [key]: parseInt(newData),
+        [key]: +newData,
       };
     });
   }
@@ -28,7 +28,8 @@ function App() {
     <>
       <Header />
       <Menu investment={investmentData} onChangeData={handleInvestmentData} />
-      <DataTable investment={investmentData} />
+      {isInputValid && <DataTable investment={investmentData} />}
+      {!isInputValid && <p className="center">Please enter a duration greater than 0.</p>}
     </>
   );
 }
